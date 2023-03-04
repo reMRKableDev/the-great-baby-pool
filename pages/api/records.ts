@@ -21,7 +21,9 @@ export default async (
       });
     }
 
-    return res.status(HTTP_STATUS_OK).json(tableRecords);
+    const data = await res.status(HTTP_STATUS_OK).json(tableRecords);
+
+    return data;
   } catch (error) {
     return res.status(HTTP_STATUS_INTERNAL_SERVER_ERROR).json({
       msg: `Failed to connect to Airtable API with status code: ${HTTP_STATUS_INTERNAL_SERVER_ERROR} `,
