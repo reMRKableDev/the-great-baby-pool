@@ -1,26 +1,26 @@
-import Airtable from "airtable";
+import { Constants } from "./constants";
 
-function createTable() {
-  let table;
+const { AIRTABLE_URL, BEARER, JSON_TYPE } = Constants;
 
-  Airtable.configure({
-    apiKey: process.env.AIRTABLE_API_KEY,
-  });
+export const fetchAirtableData = async () => {
+  try {
+    const response = await fetch(AIRTABLE_URL, {
+      headers: {
+        Authorization: BEARER,
+        "Content-Type": JSON_TYPE,
+        Accept: JSON_TYPE,
+      },
+    });
 
-  if (
-    process.env.AIRTABLE_BASE_ID !== undefined &&
-    process.env.AIRTABLE_TABLE_NAME !== undefined
-  ) {
-    const base = Airtable.base(process.env.AIRTABLE_BASE_ID);
+    if (!response.ok) {
+      throw new Error(
+        `Failed to fetch data from Airtable: ${response.status} ${response.statusText}`
+      );
+    }
 
-    table = base(process.env.AIRTABLE_TABLE_NAME);
-  } else {
-    console.error("AIRTABLE_BASE_ID or AIRTABLE_TABLE_NAME is undefined");
+    return response.json();
+  } catch (error) {
+    console.error(error);
+    throw new Error("Something went wrong while fetching data from Airtable");
   }
-
-  return table;
-}
-
-const table = createTable();
-
-export { table };
+};
