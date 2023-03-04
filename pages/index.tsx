@@ -28,7 +28,7 @@ const Home: NextPage = (props: {} | any) => {
 
       <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center gap-4">
         <h1 className="text-6xl font-bold">The Great Baby Pool: Your Bets</h1>
-        <div className="h-[500px] w-full flex justify-center">
+        <div className="max-h-[600px] w-full flex justify-center">
           <Doughnut data={data} />
         </div>
       </main>
