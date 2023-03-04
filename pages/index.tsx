@@ -5,46 +5,35 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 import { Constants } from "../utils/constants";
 
+import Layout from "../components/layout";
+
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const Home: NextPage = (props: {} | any) => {
-  console.log("🚀 ~ file: index.tsx:11 ~ props:", props);
+interface LayoutProps {
+  total: Array<number>;
+  percentage: Array<number>;
+}
+
+const Home: NextPage<LayoutProps> = ({ total, percentage }) => {
   const data = {
     labels: ["Girl", "Boy"],
     datasets: [
       {
-        data: props.total,
-        backgroundColor: ["#FF6384", "#36A2EB"],
-        hoverBackgroundColor: ["#FF6384", "#36A2EB"],
+        data: total,
+        backgroundColor: ["#FCF0BD", "#ABC485"],
+        hoverBackgroundColor: ["#DEB921", "#455E1F"],
+        borderColor: ["#DEB921", "#455E1F"],
+        hoverBorderColor: ["#F7CE25", "#749E35"],
       },
     ],
   };
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center py-2">
-      <Head>
-        <title>The Great Baby Pool</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center gap-4">
-        <h1 className="text-6xl font-bold">The Great Baby Pool: Your Bets</h1>
-        <div className="max-h-[600px] w-full flex justify-center">
-          <Doughnut data={data} />
-        </div>
-      </main>
-
-      <footer className="flex h-24 w-full items-center justify-center border-t">
-        <a
-          className="flex items-center justify-center gap-2"
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{" "}
-          <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-        </a>
-      </footer>
-    </div>
+    <Layout>
+      <h1 className="text-6xl font-bold">The Results</h1>
+      <div className="max-h-[600px] w-full flex justify-center">
+        <Doughnut data={data} />
+      </div>
+    </Layout>
   );
 };
 
