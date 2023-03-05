@@ -1,10 +1,7 @@
 import type { NextPage } from "next";
+import type { LayoutProps } from "../common/types";
 import SiteHeader from "./siteHeader";
 import SiteFooter from "./siteFooter";
-
-interface LayoutProps {
-  children: React.ReactNode;
-}
 
 const Layout: NextPage<LayoutProps> = ({ children }) => {
   return (

@@ -1,17 +1,4 @@
-type Baby = {
-  Name: string;
-  "Baby Date Of Birth": string;
-  "Baby Gender": "Boy" | "Girl";
-};
-
-type Props = {
-  data: Array<Baby>;
-};
-
-type Column = {
-  title: string;
-  data: Array<Baby>;
-};
+import type { Props, Baby, Column } from "../common/types";
 
 const BabyGrid = ({
   listOne,

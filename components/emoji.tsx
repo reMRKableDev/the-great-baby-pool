@@ -1,9 +1,5 @@
 import type { NextPage } from "next";
-
-interface EmojiProps {
-  label?: string;
-  symbol: string;
-}
+import type { EmojiProps } from "../common/types";
 
 const Emoji: NextPage<EmojiProps> = ({ label, symbol }) => (
   <span

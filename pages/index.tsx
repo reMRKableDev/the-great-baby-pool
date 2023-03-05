@@ -1,4 +1,5 @@
 import type { NextPage } from "next";
+import type { HomeProps, Baby, Record } from "../common/types";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 import { Constants } from "../utils/constants";
@@ -8,13 +9,7 @@ import Layout from "../components/layout";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-interface LayoutProps {
-  fieldsData: Array<any>;
-  total: Array<number>;
-  percentage: Array<number>;
-}
-
-const Home: NextPage<LayoutProps> = ({ fieldsData, total, percentage }) => {
+const Home: NextPage<HomeProps> = ({ fieldsData, total, percentage }) => {
   const data = {
     labels: [`Girl (${percentage[0]}%)`, `Boy (${percentage[1]}%)`],
     datasets: [
@@ -47,22 +42,6 @@ export const getServerSideProps = async () => {
     return;
   }
 
-  enum Gender {
-    Boy = "Boy",
-    Girl = "Girl",
-  }
-  interface Baby {
-    "Baby Date Of Birth": string;
-    "Baby Gender": Gender;
-    Name: string;
-  }
-
-  interface Record {
-    id: string;
-    createdTime: string;
-    fields: Baby;
-  }
-
   const fieldsData = records.map((record: Record) => record.fields);
 
   const calculatePercentage = (count: number, total: number): number =>
@@ -77,9 +56,9 @@ export const getServerSideProps = async () => {
     for (const baby of babies) {
       const gender = baby["Baby Gender"];
 
-      if (gender === Gender.Boy) {
+      if (gender === "Boy") {
         boys++;
-      } else if (gender === Gender.Girl) {
+      } else if (gender === "Girl") {
         girls++;
       }
     }
