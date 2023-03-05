@@ -4,17 +4,19 @@ import { Doughnut } from "react-chartjs-2";
 import { Constants } from "../utils/constants";
 
 import Layout from "../components/layout";
+/* import GridWrapper from "../components/gridWrapper"; */
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 interface LayoutProps {
+  fieldsData: Array<any>;
   total: Array<number>;
   percentage: Array<number>;
 }
 
-const Home: NextPage<LayoutProps> = ({ total, percentage }) => {
+const Home: NextPage<LayoutProps> = ({ fieldsData, total, percentage }) => {
   const data = {
-    labels: ["Girl", "Boy"],
+    labels: [`Girl (${percentage[0]}%)`, `Boy (${percentage[1]}%)`],
     datasets: [
       {
         data: total,
@@ -25,12 +27,14 @@ const Home: NextPage<LayoutProps> = ({ total, percentage }) => {
       },
     ],
   };
+
   return (
     <Layout>
       <h1 className="text-6xl font-bold">The Results</h1>
-      <div className="max-h-[600px] w-full flex justify-center">
+      <div className="max-h-[500px] w-full flex justify-center">
         <Doughnut data={data} />
       </div>
+      {/* {fieldsData && <GridWrapper data={fieldsData} />} */}
     </Layout>
   );
 };
@@ -81,8 +85,12 @@ export const getServerSideProps = async () => {
     }
 
     const totalBabies = boys + girls;
-    const boysPercentage = calculatePercentage(boys, totalBabies);
-    const girlsPercentage = calculatePercentage(girls, totalBabies);
+    const boysPercentage = Number(
+      calculatePercentage(boys, totalBabies).toFixed(2)
+    );
+    const girlsPercentage = Number(
+      calculatePercentage(girls, totalBabies).toFixed(2)
+    );
 
     return {
       total: [girls, boys],
@@ -94,6 +102,7 @@ export const getServerSideProps = async () => {
 
   return {
     props: {
+      fieldsData,
       total,
       percentage,
     },
