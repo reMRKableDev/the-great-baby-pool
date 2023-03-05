@@ -9,16 +9,29 @@ import Layout from "../components/layout";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
+const {
+  BG_GREEN,
+  BG_YELLOW,
+  WEBSITE_URL,
+  HOVER_BORDER_GREEN,
+  HOVER_BORDER_YELLOW,
+  HOVER_BG_AND_BORDER_GREEN,
+  HOVER_BG_AND_BORDER_YELLOW,
+} = Constants;
+
 const Home: NextPage<HomeProps> = ({ fieldsData, total, percentage }) => {
   const data = {
     labels: [`Girl (${percentage[0]}%)`, `Boy (${percentage[1]}%)`],
     datasets: [
       {
         data: total,
-        backgroundColor: ["#FCF0BD", "#ABC485"],
-        hoverBackgroundColor: ["#DEB921", "#455E1F"],
-        borderColor: ["#DEB921", "#455E1F"],
-        hoverBorderColor: ["#F7CE25", "#749E35"],
+        backgroundColor: [BG_YELLOW, BG_GREEN],
+        hoverBackgroundColor: [
+          HOVER_BG_AND_BORDER_YELLOW,
+          HOVER_BG_AND_BORDER_GREEN,
+        ],
+        borderColor: [HOVER_BG_AND_BORDER_YELLOW, HOVER_BG_AND_BORDER_GREEN],
+        hoverBorderColor: [HOVER_BORDER_YELLOW, HOVER_BORDER_GREEN],
       },
     ],
   };
@@ -35,7 +48,7 @@ const Home: NextPage<HomeProps> = ({ fieldsData, total, percentage }) => {
 };
 
 export const getServerSideProps = async () => {
-  const res = await fetch(Constants.WEBSITE_URL);
+  const res = await fetch(WEBSITE_URL);
   const { records } = await res.json();
 
   if (!records) {
